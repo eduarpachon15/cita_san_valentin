@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        body {
+            background-color: #fef6f0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://www.example.com/flower-background.png'); /* Aquí debes poner la URL de una imagen de fondo floral */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px;
+        }
+        /* Flor como imagen */
+        .flor {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-size: cover;
+            background-position: center;
+        }
+        .flor1 {
+            top: -30px;
+            left: -30px;
+            background-image: url('https://images.vexels.com/media/users/3/235101/isolated/preview/602d68b1f5cf32afcb88737793c16ef6-dibujado-a-mano-girasol-naturaleza-flor.png'); /* Girasol */
+        }
+        .flor2 {
+            top: -30px;
+            right: -30px;
+            background-image: url('https://images.vexels.com/media/users/3/235101/isolated/preview/602d68b1f5cf32afcb88737793c16ef6-dibujado-a-mano-girasol-naturaleza-flor.png'); /* Girasol */
+        }
+        .flor3 {
+            bottom: -30px;
+            left: -30px;
+            background-image: url('https://images.vexels.com/media/users/3/235101/isolated/preview/602d68b1f5cf32afcb88737793c16ef6-dibujado-a-mano-girasol-naturaleza-flor.png'); /* Girasol */
+        }
+        .flor4 {
+            bottom: -30px;
+            right: -30px;
+            background-image: url('https://images.vexels.com/media/users/3/235101/isolated/preview/602d68b1f5cf32afcb88737793c16ef6-dibujado-a-mano-girasol-naturaleza-flor.png'); /* Girasol */
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            z-index: 1;
+            position: relative;
+        }
+        .highlight {
+            color: #FF6F61;
+            font-size: 20px;
+        }
+        button {
+            background-color: #FF6F61;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #e55a4d;
+        }
+        #textInput {
+            display: none;
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            .message {
+                font-size: 16px;
+            }
+            .highlight {
+                font-size: 18px;
+            }
+            .flor {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flor flor1"></div>
+        <div class="flor flor2"></div>
+        <div class="flor flor3"></div>
+        <div class="flor flor4"></div>
+        <p class="message" id="messageText"></p>
+        
+        <button id="continueBtn" onclick="changeText()">Continuar</button>
+        
+        <textarea id="textInput" placeholder="Explícame por qué no deseas ser mi cita..."></textarea>
+        <button id="sendMessage" style="display:none;" onclick="sendMessage()">Enviar respuesta</button>
+    </div>
+
+    <script>
+        // Los textos que aparecerán en la secuencia
+        var texts = [
+            "Astrid, amor mio, mi niña preciosa, quiero compartir algo muy importante contigo, se que la distancia nos a afectado de cierta manera, sin embargo mi amor no deja de crecer por ti, cada dia que pasa me siento afortunado de tenerte en mi vida...",
+            "Desde que te conocí, todo ha sido mucho mejor, mis dias son mas bonitos, mi felicidad se basa en verte sonreir, en compartir una comida contigo..",
+            "No imagino un día sin ti, me haces tan feliz, haces que sienta ese amor que no crei volver a sentir por nadie, se que no soy perfecto, pero intento que cada detalle te haga sentir bien, y especial, y me tome el tiempo de hacer esto para decirte que...",
+            "eres lo mejor que me ha pasado, y quisiera preguntarte si ♥..."
+        ];
+
+        var currentText = 0;
+
+        // Mostrar el primer texto inmediatamente al cargar la página
+        window.onload = function() {
+            var message = document.getElementById("messageText");
+            message.innerHTML = texts[currentText];
+        };
+
+        function changeText() {
+            // Obtenemos el elemento que contiene el mensaje
+            var message = document.getElementById("messageText");
+            var continueBtn = document.getElementById("continueBtn");
+
+            // Si no hemos llegado al último texto, cambiamos al siguiente
+            if (currentText < texts.length - 1) {
+                currentText++;
+                message.innerHTML = texts[currentText];
+            } else {
+                // Si estamos en el último texto, mostramos los botones de "Sí" y "No"
+                message.innerHTML = "Quieres ser mi cita de san valentin?"
+                showButtons();
+                continueBtn.style.display = 'none'; // Ocultamos el botón de continuar
+            }
+        }
+
+        function showButtons() {
+            // Añadimos los botones de respuesta (Sí / No) solo una vez
+            var existingButtons = document.querySelectorAll(".responseButton");
+            if (existingButtons.length === 0) { // Si no hay botones, los creamos
+                var container = document.querySelector('.container');
+                var buttonsHTML = `
+                    <button class="responseButton" onclick="changeTextResponse('si')">Sí</button>
+                    <button class="responseButton" onclick="changeTextResponse('no')">No</button>
+                `;
+                container.innerHTML += buttonsHTML;
+            }
+        }
+
+        function changeTextResponse(answer) {
+            var message = document.getElementById("messageText");
+            var sendMessageButton = document.getElementById("sendMessage");
+            var textInput = document.getElementById("textInput");
+
+            // Si elige "Sí", redirige a WhatsApp
+            if (answer === 'si') {
+                message.innerHTML = "SIUUUUUUUUUUUUUU ♥ GRACIAS AMOR POR HACERME TAN FELIZ";
+                window.location.href = "https://wa.me/573165665383?text=Si,%20quiero%20ser%20tu%20cita%20de%20San%20Valentín"; // Cambia el número con tu teléfono
+            } else if (answer === 'no') {
+                message.innerHTML = "Entiendo, me gustaría saber por qué.";
+                textInput.style.display = 'block';
+                sendMessageButton.style.display = 'block';
+            }
+
+            // Eliminar los botones de "Sí" y "No" una vez se haga clic en uno de ellos
+            var responseButtons = document.querySelectorAll(".responseButton");
+            responseButtons.forEach(button => button.remove());
+        }
+
+        function sendMessage() {
+            var textInput = document.getElementById("textInput");
+            var rejectionReason = textInput.value;
+            if (rejectionReason) {
+                window.location.href = "https://wa.me/573165665383?text=No,%20no%20quiero%20ser%20tu%20cita.%20Motivo:%20" + encodeURIComponent(rejectionReason); // Cambia el número con tu teléfono
+            } else {
+                alert("Por favor, escribe una razón.");
+            }
+        }
+    </script>
+</body>
+</html>
