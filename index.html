@@ -189,7 +189,7 @@
             var textInput = document.getElementById("textInput");
             var rejectionReason = textInput.value;
             if (rejectionReason) {
-                window.location.href = "https://wa.me/573165665383?text=No,%20no%20quiero%20ser%20tu%20cita.%20Motivo:%20" + encodeURIComponent(rejectionReason); // Cambia el número con tu teléfono
+                window.location.href = "https://wa.me/573165665383?text=No,%20no%20quiero%20ser%20tu%20cita, " + encodeURIComponent(rejectionReason); // Cambia el número con tu teléfono
             } else {
                 alert("Por favor, escribe una razón.");
             }
